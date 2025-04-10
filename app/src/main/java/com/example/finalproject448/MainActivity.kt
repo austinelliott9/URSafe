@@ -1,24 +1,37 @@
 package com.example.finalproject448
-
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var listView: ListView
+    private lateinit var addButton: Button
+    private lateinit var adapter: CredentialsViewer
+    private val credentials = mutableListOf<Credentials>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+
+        listView = findViewById(R.id.credentialsListView)
+        addButton = findViewById(R.id.addCredentialButton)
+
+        // Load saved credentials securely
+        credentials.addAll(CredentialsStorage.loadCredentials(this))
+
+        adapter = CredentialsViewer(this, credentials)
+        listView.adapter = adapter
+
+        addButton.setOnClickListener {
+            // Example: simulate adding a new credential
+            val newCredential = Credentials("Twitter", "user123", "Twi!ter@2025")
+            credentials.add(newCredential)
+            CredentialsStorage.saveCredentials(this, credentials)
+            adapter.notifyDataSetChanged()
         }
     }
 }
-
 //Test
 
 // Raksha Karthikeyan
