@@ -3,11 +3,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.example.finalproject448.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/loginFragment"
+        android:name="com.example.finalproject448.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_credentialsListFragment"
+            app:destination="@id/credentialsListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/credentialsListFragment"
+        android:name="com.example.finalproject448.CredentialsListFragment"
+        android:label="fragment_credentials_list"
+        tools:layout="@layout/fragment_credentials_list" >
+        <action
+            android:id="@+id/action_credentialsListFragment_to_credentialsFragment"
+            app:destination="@id/credentialsFragment" />
+        <action
+            android:id="@+id/action_credentialsListFragment_to_addCredentialsFragment"
+            app:destination="@id/addCredentialsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/credentialsFragment"
+        android:name="com.example.finalproject448.CredentialsFragment"
+        android:label="fragment_credentials"
+        tools:layout="@layout/fragment_credentials" />
+    <fragment
+        android:id="@+id/addCredentialsFragment"
+        android:name="com.example.finalproject448.AddCredentialsFragment"
+        android:label="fragment_add_credentials"
+        tools:layout="@layout/fragment_add_credentials" >
+        <action
+            android:id="@+id/action_addCredentialsFragment_to_generatePasswordFragment"
+            app:destination="@id/generatePasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/generatePasswordFragment"
+        android:name="com.example.finalproject448.GeneratePasswordFragment"
+        android:label="fragment_generate_password"
+        tools:layout="@layout/fragment_generate_password" />
+
 </navigation>
