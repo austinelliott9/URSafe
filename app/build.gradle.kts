@@ -48,4 +48,5 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.androidx.security.crypto)
+    implementation ("com.google.code.gson:gson:2.8.8")
 }
