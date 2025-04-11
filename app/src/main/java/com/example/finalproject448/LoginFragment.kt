@@ -20,11 +20,6 @@ private const val ARG_PARAM2 = "param2"
  */
 class LoginFragment : Fragment() {
 
-    private lateinit var listView: ListView
-    private lateinit var addButton: Button
-    private lateinit var adapter: CredentialsViewer
-    private val credentials = mutableListOf<Credentials>()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,22 +27,7 @@ class LoginFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_login, container, false)
-        listView = view.findViewById(R.id.credentialsListView)
-        addButton = view.findViewById(R.id.addCredentialButton)
 
-        // Load saved credentials securely
-        credentials.addAll(CredentialsStorage.loadCredentials(requireContext()))
-
-        adapter = CredentialsViewer(requireContext(), credentials)
-        listView.adapter = adapter
-
-        addButton.setOnClickListener {
-            // Example: simulate adding a new credential
-            val newCredential = Credentials("Twitter", "user123", "Twi!ter@2025")
-            credentials.add(newCredential)
-            CredentialsStorage.saveCredentials(requireContext(), credentials)
-            adapter.notifyDataSetChanged()
-        }
         return view
     }
 
