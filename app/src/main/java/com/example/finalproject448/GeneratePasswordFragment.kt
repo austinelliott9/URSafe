@@ -5,11 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.EditText
+import android.widget.TextView
 
 /**
  * A simple [Fragment] subclass.
@@ -17,43 +16,42 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class GeneratePasswordFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var upperCheckBox: CheckBox
+    private lateinit var lowerCheckBox: CheckBox
+    private lateinit var numberCheckBox: CheckBox
+    private lateinit var specialCheckBox: CheckBox
+    private lateinit var lengthEditText: EditText
+    private lateinit var generateButton: Button
+    private lateinit var generatedPasswordTextView: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_generate_password, container, false)
-    }
+        val view = inflater.inflate(R.layout.fragment_generate_password, container, false)
+        upperCheckBox = view.findViewById(R.id.upperCheckBox)
+        lowerCheckBox = view.findViewById(R.id.lowerCheckBox)
+        numberCheckBox = view.findViewById(R.id.numberCheckBox)
+        specialCheckBox = view.findViewById(R.id.specialCheckBox)
+        lengthEditText = view.findViewById(R.id.lengthEditText)
+        generateButton = view.findViewById(R.id.generateButton)
+        generatedPasswordTextView = view.findViewById(R.id.generatedPasswordTextView)
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment GeneratePasswordFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            GeneratePasswordFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+        generateButton.setOnClickListener {
+            val length = lengthEditText.text.toString().toIntOrNull()
+            if (length != null && length > 0) {
+                val upper = upperCheckBox.isChecked
+                val lower = lowerCheckBox.isChecked
+                val number = numberCheckBox.isChecked
+                val special = specialCheckBox.isChecked
+
+                val password  = PasswordGenerator().generatePassword(length, upper, lower, number, special)
+                generatedPasswordTextView.text = password
+            } else {
+                generatedPasswordTextView.text = "Please enter a length greater than 0."
             }
+        }
+        return view
     }
 }
