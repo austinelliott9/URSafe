@@ -46,6 +46,11 @@ class GeneratePasswordFragment : Fragment() {
                 val number = numberCheckBox.isChecked
                 val special = specialCheckBox.isChecked
 
+                if (!upper && !lower && !number && !special) {
+                    generatedPasswordTextView.text = "Please select at least one character type."
+                    return@setOnClickListener
+                }
+
                 val password  = PasswordGenerator().generatePassword(length, upper, lower, number, special)
                 generatedPasswordTextView.text = password
             } else {
