@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.google.gson.Gson
@@ -20,6 +21,7 @@ class AddCredentialsFragment : Fragment() {
     private lateinit var usernameEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var saveButton: Button
+    private lateinit var toGeneratorButton: Button
     private val gson = Gson()
 
     override fun onCreateView(
@@ -38,10 +40,14 @@ class AddCredentialsFragment : Fragment() {
         usernameEditText = view.findViewById(R.id.usernameEditText)
         passwordEditText = view.findViewById(R.id.passwordEditText)
         saveButton = view.findViewById(R.id.saveButton)
+        toGeneratorButton = view.findViewById(R.id.toGeneratorButton)
 
-        // Set click listener for the save button
+        // Set click listener for the buttons
         saveButton.setOnClickListener {
             saveCredentials()
+        }
+        toGeneratorButton.setOnClickListener{
+            findNavController().navigate(R.id.action_addCredentialsFragment_to_generatePasswordFragment)
         }
     }
 
