@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 
 /**
  * A simple [Fragment] subclass.
@@ -47,14 +48,14 @@ class GeneratePasswordFragment : Fragment() {
                 val special = specialCheckBox.isChecked
 
                 if (!upper && !lower && !number && !special) {
-                    generatedPasswordTextView.text = "Please select at least one character type."
+                    Toast.makeText(requireContext(), "Please select at least one character type.", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
 
                 val password  = PasswordGenerator().generatePassword(length, upper, lower, number, special)
                 generatedPasswordTextView.text = password
             } else {
-                generatedPasswordTextView.text = "Please enter a length greater than 0."
+                Toast.makeText(requireContext(), "Please enter a length greater than 0.", Toast.LENGTH_SHORT).show()
             }
         }
         return view
