@@ -31,11 +31,10 @@ class PasswordGenerator {
             .map { characterPool.random() }
             .joinToString("") }
 
-        fun saveGeneratedCredentials(context: Context, service: String, username: String, password: String) {
+        /*fun saveGeneratedCredentials(context: Context, service: String, username: String, password: String) {
             val newCredentials = Credentials(service, username, password)
             val existingCredentials = CredentialsStorage.loadCredentials(context)
             existingCredentials.add(newCredentials)
-            CredentialsStorage.saveCredentials(context, existingCredentials)
+            CredentialsStorage.saveCredentials(context, existingCredentials)*/
     }
 
-}

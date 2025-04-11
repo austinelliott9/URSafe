@@ -1,33 +1,26 @@
 package com.example.finalproject448
 
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import androidx.fragment.app.Fragment
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [AddCredentialsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AddCredentialsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var serviceEditText: EditText
+    private lateinit var usernameEditText: EditText
+    private lateinit var passwordEditText: EditText
+    private lateinit var saveButton: Button
+    private val gson = Gson()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,23 +30,77 @@ class AddCredentialsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_add_credentials, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AddCredentialsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AddCredentialsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Initializes UI components, add these to fragment credentials add
+        serviceEditText = view.findViewById(R.id.serviceEditText)
+        usernameEditText = view.findViewById(R.id.usernameEditText)
+        passwordEditText = view.findViewById(R.id.passwordEditText)
+        saveButton = view.findViewById(R.id.saveButton)
+
+        // Set click listener for the save button
+        saveButton.setOnClickListener {
+            saveCredentials()
+        }
+    }
+
+    private fun saveCredentials() {
+        val service = serviceEditText.text.toString().trim()
+        val username = usernameEditText.text.toString().trim()
+        val password = passwordEditText.text.toString().trim()
+
+        if (TextUtils.isEmpty(service) || TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
+            // Shows a message or toast if fields are empty
+            return
+        }
+
+        // Creates a new Credentials object
+        val newCredential = Credentials(service, username, password)
+
+        // Saves the new credentials to EncryptedSharedPreferences
+        val masterKey = MasterKey.Builder(requireContext())
+            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+            .build()
+
+        val sharedPrefs = EncryptedSharedPreferences.create(
+            requireContext(),
+            "secure_prefs",
+            masterKey,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+
+        // Loads existing credentials from list
+        val credentialsList = loadCredentials(requireContext())
+
+        // Adds the new credential to the list
+        credentialsList.add(newCredential)
+
+        // Saves the updated list back to SharedPreferences
+        val json = gson.toJson(credentialsList)
+        sharedPrefs.edit().putString("stored_credentials", json).apply()
+
+        // Optionally, navigate back to the list of credentials
+        // Navigation code (if using NavController) could go here
+    }
+
+    // Loads credentials from EncryptedSharedPreferences
+    private fun loadCredentials(context: Context): MutableList<Credentials> {
+        val masterKey = MasterKey.Builder(context)
+            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+            .build()
+
+        val sharedPrefs = EncryptedSharedPreferences.create(
+            context,
+            "secure_prefs",
+            masterKey,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+
+        val json = sharedPrefs.getString("stored_credentials", null) ?: return mutableListOf()
+        val type = object : TypeToken<MutableList<Credentials>>() {}.type
+        return gson.fromJson(json, type)
     }
 }
