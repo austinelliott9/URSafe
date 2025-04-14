@@ -49,6 +49,12 @@ class AddCredentialsFragment : Fragment() {
         toGeneratorButton.setOnClickListener{
             findNavController().navigate(R.id.action_addCredentialsFragment_to_generatePasswordFragment)
         }
+
+        // Listen for result from password generator
+        parentFragmentManager.setFragmentResultListener("passwordRequestKey", viewLifecycleOwner){_, bundle ->
+            val generatedPassword = bundle.getString("generatedPassword")
+            passwordEditText.setText(generatedPassword)
+        }
     }
 
     private fun saveCredentials() {

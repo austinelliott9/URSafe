@@ -10,6 +10,7 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 
 /**
  * A simple [Fragment] subclass.
@@ -24,13 +25,14 @@ class GeneratePasswordFragment : Fragment() {
     private lateinit var lengthEditText: EditText
     private lateinit var generateButton: Button
     private lateinit var generatedPasswordTextView: TextView
+    private lateinit var confirmButton: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_generate_password, container, false)
+
         upperCheckBox = view.findViewById(R.id.upperCheckBox)
         lowerCheckBox = view.findViewById(R.id.lowerCheckBox)
         numberCheckBox = view.findViewById(R.id.numberCheckBox)
@@ -38,6 +40,7 @@ class GeneratePasswordFragment : Fragment() {
         lengthEditText = view.findViewById(R.id.lengthEditText)
         generateButton = view.findViewById(R.id.generateButton)
         generatedPasswordTextView = view.findViewById(R.id.generatedPasswordTextView)
+        confirmButton = view.findViewById(R.id.confirmButton)
 
         generateButton.setOnClickListener {
             val length = lengthEditText.text.toString().toIntOrNull()
@@ -54,8 +57,20 @@ class GeneratePasswordFragment : Fragment() {
 
                 val password  = PasswordGenerator().generatePassword(length, upper, lower, number, special)
                 generatedPasswordTextView.text = password
+
+                confirmButton.visibility = View.VISIBLE
             } else {
                 Toast.makeText(requireContext(), "Please enter a length greater than 0.", Toast.LENGTH_SHORT).show()
+            }
+        }
+        confirmButton.setOnClickListener {
+            val password = generatedPasswordTextView.text.toString()
+            if (password.isNotEmpty()) {
+                val result = Bundle().apply{
+                    putString("generatedPassword", password)
+                }
+                parentFragmentManager.setFragmentResult("passwordRequestKey", result)
+                findNavController().popBackStack()
             }
         }
         return view
