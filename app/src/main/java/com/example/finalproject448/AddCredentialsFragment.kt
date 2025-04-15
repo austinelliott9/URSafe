@@ -95,6 +95,7 @@ class AddCredentialsFragment : Fragment() {
 
         // Optionally, navigate back to the list of credentials
         // Navigation code (if using NavController) could go here
+        findNavController().popBackStack()
     }
 
     // Loads credentials from EncryptedSharedPreferences
