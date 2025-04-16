@@ -21,7 +21,7 @@ class CredentialsViewer(
         val text1 = view.findViewById<TextView>(android.R.id.text1)
         val text2 = view.findViewById<TextView>(android.R.id.text2)
 
-        text1.text = "${item.service} — ${item.username}"
+        text1.text = "${item.service}\nUsername: ${item.username}"
         text2.text = "•••••••••• (tap to reveal)"
 
         view.setOnClickListener {
