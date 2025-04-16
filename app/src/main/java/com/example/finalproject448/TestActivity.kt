@@ -10,11 +10,5 @@ class TestActivity : AppCompatActivity() {
         // Set up a blank container for fragment
         setContentView(R.layout.activity_test)
 
-        // Load the fragment
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, GeneratePasswordFragment())
-                .commit()
-        }
     }
 }

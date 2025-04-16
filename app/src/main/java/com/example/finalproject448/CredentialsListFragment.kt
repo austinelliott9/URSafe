@@ -1,72 +1,74 @@
 package com.example.finalproject448
 
+import android.app.AlertDialog
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ListView
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [CredentialsListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CredentialsListFragment : Fragment() {
 
-    private lateinit var listView: ListView
+    private lateinit var recyclerView: RecyclerView
     private lateinit var addButton: Button
-    private lateinit var adapter: CredentialsViewer
+    private lateinit var adapter: CredentialsAdapter
     private val credentials = mutableListOf<Credentials>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_credentials_list, container, false)
-        listView = view.findViewById(R.id.credentialsListView)
+        recyclerView = view.findViewById(R.id.credentialsRecyclerView)
         addButton = view.findViewById(R.id.addCredentialButton)
 
-        // Load saved credentials securely
         credentials.addAll(CredentialsStorage.loadCredentials(requireContext()))
 
-        adapter = CredentialsViewer(requireContext(), credentials)
-        listView.adapter = adapter
+        adapter = CredentialsAdapter(credentials) { deletedItem ->
+            CredentialsStorage.saveCredentials(requireContext(), credentials)
+        }
+
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        // Swipe to delete
+        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ) = false
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val credential = credentials[position]
+
+                AlertDialog.Builder(requireContext())
+                    .setTitle("Delete Credential")
+                    .setMessage("Are you sure you want to delete the credential for ${credential.service}?")
+                    .setPositiveButton("Delete") { _, _ ->
+                        adapter.removeAt(position)
+                        CredentialsStorage.saveCredentials(requireContext(), credentials)
+                    }
+                    .setNegativeButton("Cancel") { _, _ ->
+                        adapter.notifyItemChanged(position) // Reset swipe
+                    }
+                    .setCancelable(false)
+                    .show()
+            }
+        })
+
+        itemTouchHelper.attachToRecyclerView(recyclerView)
 
         addButton.setOnClickListener {
-            // Example: simulate adding a new credential
-            val newCredential = Credentials("Twitter", "user123", "Twi!ter@2025")
-            credentials.add(newCredential)
-            CredentialsStorage.saveCredentials(requireContext(), credentials)
-            adapter.notifyDataSetChanged()
+            findNavController().navigate(R.id.action_credentialsListFragment_to_addCredentialsFragment)
         }
-        return view
-    }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CredentialsListFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CredentialsListFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        return view
     }
 }

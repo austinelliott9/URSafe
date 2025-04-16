@@ -3,4 +3,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_test">TestActivity</string>
+    <string name="go_to_credentials">Go to Credentials</string>
+    <string name="Enter_Password">Enter Password</string>
+    <string name="Welcome_to_your_Password_Manager">Welcome to your Password Manager</string>
 </resources>

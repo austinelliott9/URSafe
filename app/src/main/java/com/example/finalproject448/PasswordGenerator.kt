@@ -23,10 +23,6 @@ class PasswordGenerator {
         if (useNumbers) characterPool += numbers
         if (useSpecialChars) characterPool += specialChars
 
-        if (characterPool.isEmpty()) {
-            throw IllegalArgumentException("At least one character type must be selected.")
-        }
-
         return (1..length)
             .map { characterPool.random() }
             .joinToString("") }
