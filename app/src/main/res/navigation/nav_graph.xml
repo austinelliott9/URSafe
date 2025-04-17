@@ -20,9 +20,17 @@
         android:label="fragment_credentials_list"
         tools:layout="@layout/fragment_credentials_list" >
         <action
+            android:id="@+id/action_credentialsListFragment_to_credentialsFragment"
+            app:destination="@id/credentialsFragment" />
+        <action
             android:id="@+id/action_credentialsListFragment_to_addCredentialsFragment"
             app:destination="@id/addCredentialsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/credentialsFragment"
+        android:name="com.example.finalproject448.CredentialsFragment"
+        android:label="fragment_credentials"
+        tools:layout="@layout/fragment_credentials" />
     <fragment
         android:id="@+id/addCredentialsFragment"
         android:name="com.example.finalproject448.AddCredentialsFragment"
@@ -30,19 +38,12 @@
         tools:layout="@layout/fragment_add_credentials" >
         <action
             android:id="@+id/action_addCredentialsFragment_to_generatePasswordFragment"
-            app:destination="@id/createPasswordFragment" />
+            app:destination="@id/generatePasswordFragment" />
     </fragment>
     <fragment
-        android:id="@+id/createPasswordFragment"
-        android:name="com.example.finalproject448.CreatePasswordFragment"
-        android:label="Create Password"
-        tools:layout="@layout/fragment_initial_create_password" />
-    <action
-        android:id="@+id/action_createPasswordFragment_to_loginFragment"
-        app:destination="@id/loginFragment" />
-
-    <action
-        android:id="@+id/action_credentialsListFragment_to_createPasswordFragment"
-        app:destination="@id/createPasswordFragment" />
+        android:id="@+id/generatePasswordFragment"
+        android:name="com.example.finalproject448.GeneratePasswordFragment"
+        android:label="fragment_generate_password"
+        tools:layout="@layout/fragment_generate_password" />
 
 </navigation>
