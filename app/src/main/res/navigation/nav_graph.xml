@@ -20,17 +20,9 @@
         android:label="fragment_credentials_list"
         tools:layout="@layout/fragment_credentials_list" >
         <action
-            android:id="@+id/action_credentialsListFragment_to_credentialsFragment"
-            app:destination="@id/credentialsFragment" />
-        <action
             android:id="@+id/action_credentialsListFragment_to_addCredentialsFragment"
             app:destination="@id/addCredentialsFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/credentialsFragment"
-        android:name="com.example.finalproject448.CredentialsFragment"
-        android:label="fragment_credentials"
-        tools:layout="@layout/fragment_credentials" />
     <fragment
         android:id="@+id/addCredentialsFragment"
         android:name="com.example.finalproject448.AddCredentialsFragment"

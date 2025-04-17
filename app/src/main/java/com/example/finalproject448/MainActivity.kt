@@ -15,11 +15,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        testGson(this) // This runs the GSON test
+        //testGson(this) // This runs the GSON test
 
     }
 
-    private fun testGson(context: Context) {
+    /*private fun testGson(context: Context) {
         val gson = Gson()
 
         // Test function to create a sample list of credentials to test JSON
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         val type = object : TypeToken<List<Credentials>>() {}.type
         val deserializedList: List<Credentials> = gson.fromJson(storedJson, type)
         Log.d("GsonTest", "Deserialized List: $deserializedList")
-    }
+    }*/
 
 }
 
