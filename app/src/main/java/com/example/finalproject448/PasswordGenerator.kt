@@ -1,14 +1,10 @@
 package com.example.finalproject448
 
-import android.content.Context
-
-//import kotlin.coroutines.jvm.internal.CompletedContinuation.context
-
 class PasswordGenerator {
-    val upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    val lowerChars = "abcdefghijklmnopqrstuvwxyz"
-    val numbers = "0123456789"
-    val specialChars = " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
+    private val upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    private val lowerChars = "abcdefghijklmnopqrstuvwxyz"
+    private val numbers = "0123456789"
+    private val specialChars = " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
 
     fun generatePassword(
         length: Int,
@@ -26,11 +22,4 @@ class PasswordGenerator {
         return (1..length)
             .map { characterPool.random() }
             .joinToString("") }
-
-        /*fun saveGeneratedCredentials(context: Context, service: String, username: String, password: String) {
-            val newCredentials = Credentials(service, username, password)
-            val existingCredentials = CredentialsStorage.loadCredentials(context)
-            existingCredentials.add(newCredentials)
-            CredentialsStorage.saveCredentials(context, existingCredentials)*/
     }
-
