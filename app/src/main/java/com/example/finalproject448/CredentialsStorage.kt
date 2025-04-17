@@ -13,7 +13,7 @@ object CredentialsStorage {
     private val gson = Gson()
 
     // initialize shared preferences for better performance and reuse
-    private fun getPrefs(context: Context) = EncryptedSharedPreferences.create(
+    fun getPrefs(context: Context) = EncryptedSharedPreferences.create(
         context,
         PREF_NAME,
         MasterKey.Builder(context)
@@ -32,5 +32,12 @@ object CredentialsStorage {
         val json = getPrefs(context).getString(CREDENTIALS_KEY, null) ?: return mutableListOf()
         val type = object : TypeToken<MutableList<Credentials>>() {}.type
         return gson.fromJson(json, type)
+    }
+    fun saveUserPassword(context: Context, password: String) {
+        getPrefs(context).edit { putString("user_password", password) }
+    }
+    fun validatePassword(context: Context, enteredPassword: String): Boolean {
+        val storedPassword = getPrefs(context).getString("user_password", null)
+        return storedPassword == enteredPassword
     }
 }
