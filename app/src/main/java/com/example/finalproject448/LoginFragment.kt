@@ -70,30 +70,6 @@ class LoginFragment : Fragment() {
                 }
             }
         }
-
-        var isPasswordVisible = false
-
-        editPassword.setOnTouchListener { v, event ->
-            val drawableEnd = 2
-            if (event.rawX >= (editPassword.right - editPassword.compoundDrawables[drawableEnd].bounds.width())) {
-                v.performClick() // Accessibility-friendly
-
-                isPasswordVisible = !isPasswordVisible
-
-                if (isPasswordVisible) {
-                    editPassword.inputType = android.text.InputType.TYPE_CLASS_TEXT
-                    editPassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_eye_open, 0)
-                } else {
-                    editPassword.inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
-                    editPassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_eye_closed, 0)
-                }
-
-                editPassword.setSelection(editPassword.text.length)
-                true
-            } else {
-                false
-            }
-        }
     }
 
     override fun onCreateView(
