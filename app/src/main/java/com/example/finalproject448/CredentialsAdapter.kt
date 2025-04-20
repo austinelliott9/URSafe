@@ -12,8 +12,9 @@ class CredentialsAdapter(
 ) : RecyclerView.Adapter<CredentialsAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val serviceText: TextView = view.findViewById(R.id.text1)
-        val passwordText: TextView = view.findViewById(R.id.text2)
+        val serviceText: TextView = view.findViewById(R.id.text_service)
+        val usernameText: TextView = view.findViewById(R.id.text_username)
+        val passwordText: TextView = view.findViewById(R.id.text_password)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -24,7 +25,8 @@ class CredentialsAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = credentials[position]
-        holder.serviceText.text = "${item.service}\nUsername: ${item.username}"
+        holder.serviceText.text = item.service
+        holder.usernameText.text = "Username: ${item.username}"
         holder.passwordText.text = "•••••••••• (tap to reveal)"
 
         holder.itemView.setOnClickListener {
