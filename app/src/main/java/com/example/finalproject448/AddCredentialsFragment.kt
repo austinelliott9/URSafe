@@ -15,6 +15,7 @@ import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import androidx.core.content.edit
 
 class AddCredentialsFragment : Fragment() {
 
@@ -91,7 +92,7 @@ class AddCredentialsFragment : Fragment() {
 
         // Saves the updated list back to SharedPreferences
         val json = gson.toJson(credentialsList)
-        sharedPrefs.edit().putString("stored_credentials", json).apply()
+        sharedPrefs.edit { putString("stored_credentials", json) }
 
         // Optionally, navigate back to the list of credentials
         findNavController().popBackStack()
