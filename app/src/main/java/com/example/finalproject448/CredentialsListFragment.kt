@@ -27,7 +27,9 @@ class CredentialsListFragment : Fragment() {
         addButton = view.findViewById(R.id.addCredentialButton)
 
         adapter = CredentialsAdapter(
-            CredentialsStorage.loadCredentials(requireContext()).toMutableList()
+            CredentialsStorage.loadCredentials(requireContext())
+                .sortedBy { it.service.lowercase() }
+                .toMutableList()
         ) {
             CredentialsStorage.saveCredentials(requireContext(), adapter.getAll())
         }
