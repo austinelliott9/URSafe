@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.security.crypto.EncryptedSharedPreferences
@@ -35,7 +36,6 @@ class AddCredentialsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Initializes UI components, add these to fragment credentials add
         serviceEditText = view.findViewById(R.id.serviceEditText)
         usernameEditText = view.findViewById(R.id.usernameEditText)
         passwordEditText = view.findViewById(R.id.passwordEditText)
@@ -63,7 +63,7 @@ class AddCredentialsFragment : Fragment() {
         val password = passwordEditText.text.toString().trim()
 
         if (TextUtils.isEmpty(service) || TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
-            // Shows a message or toast if fields are empty
+            Toast.makeText(requireContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -94,7 +94,6 @@ class AddCredentialsFragment : Fragment() {
         sharedPrefs.edit().putString("stored_credentials", json).apply()
 
         // Optionally, navigate back to the list of credentials
-        // Navigation code (if using NavController) could go here
         findNavController().popBackStack()
     }
 
