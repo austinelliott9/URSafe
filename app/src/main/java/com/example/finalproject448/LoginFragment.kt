@@ -21,7 +21,7 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val editPassword = view.findViewById<EditText>(R.id.editTextText)
-        val myButton = view.findViewById<Button>(R.id.goToCredentials)
+        val loginButton = view.findViewById<Button>(R.id.goToCredentials)
 
         val masterKey = MasterKey.Builder(requireContext())
             .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
@@ -41,13 +41,13 @@ class LoginFragment : Fragment() {
         // Set the hint based on whether a password is saved
         if (savedPassword == null) {
             passwordLayout.hint = "Set your password"
-            myButton.text = "Save Password"
+            loginButton.text = "Save Password"
         } else {
             passwordLayout.hint = "Enter your password"
-            myButton.text = "Login"
+            loginButton.text = "Login"
         }
 
-        myButton.setOnClickListener {
+        loginButton.setOnClickListener {
             val enteredPassword = editPassword.text.toString()
 
             if (enteredPassword.isBlank()){
@@ -69,6 +69,7 @@ class LoginFragment : Fragment() {
                     Toast.makeText(requireContext(), "Incorrect password", Toast.LENGTH_SHORT).show()
                 }
             }
+            editPassword.text?.clear()
         }
     }
 
