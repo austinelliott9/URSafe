@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import androidx.core.content.edit
+import com.google.android.material.textfield.TextInputLayout
 
 class LoginFragment : Fragment() {
     @SuppressLint("SetTextI18n", "ClickableViewAccessibility")
@@ -35,13 +36,14 @@ class LoginFragment : Fragment() {
         )
 
         val savedPassword = sharedPrefs.getString("user_password", null)
+        val passwordLayout = view.findViewById<TextInputLayout>(R.id.passwordInputLayout)
 
         // Set the hint based on whether a password is saved
         if (savedPassword == null) {
-            editPassword.hint = "Set your password"
+            passwordLayout.hint = "Set your password"
             myButton.text = "Save Password"
         } else {
-            editPassword.hint = "Enter your password"
+            passwordLayout.hint = "Enter your password"
             myButton.text = "Login"
         }
 
