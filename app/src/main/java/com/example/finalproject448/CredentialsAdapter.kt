@@ -41,4 +41,12 @@ class CredentialsAdapter(
         notifyItemRemoved(position)
         onDelete(item)
     }
+
+    fun getItem(position: Int): Credentials {
+        return credentials[position]
+    }
+
+    fun getAll(): List<Credentials> {
+        return credentials
+    }
 }

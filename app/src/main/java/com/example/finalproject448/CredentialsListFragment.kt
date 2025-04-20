@@ -17,7 +17,6 @@ class CredentialsListFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var addButton: Button
     private lateinit var adapter: CredentialsAdapter
-    private val credentials = mutableListOf<Credentials>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,10 +26,10 @@ class CredentialsListFragment : Fragment() {
         recyclerView = view.findViewById(R.id.credentialsRecyclerView)
         addButton = view.findViewById(R.id.addCredentialButton)
 
-        credentials.addAll(CredentialsStorage.loadCredentials(requireContext()))
-
-        adapter = CredentialsAdapter(credentials) { deletedItem ->
-            CredentialsStorage.saveCredentials(requireContext(), credentials)
+        adapter = CredentialsAdapter(
+            CredentialsStorage.loadCredentials(requireContext()).toMutableList()
+        ) {
+            CredentialsStorage.saveCredentials(requireContext(), adapter.getAll())
         }
 
         recyclerView.adapter = adapter
@@ -46,14 +45,13 @@ class CredentialsListFragment : Fragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
-                val credential = credentials[position]
+                val credential = adapter.getItem(position)
 
                 AlertDialog.Builder(requireContext())
                     .setTitle("Delete Credential")
                     .setMessage("Are you sure you want to delete the credential for ${credential.service}?")
                     .setPositiveButton("Delete") { _, _ ->
                         adapter.removeAt(position)
-                        CredentialsStorage.saveCredentials(requireContext(), credentials)
                     }
                     .setNegativeButton("Cancel") { _, _ ->
                         adapter.notifyItemChanged(position) // Reset swipe
