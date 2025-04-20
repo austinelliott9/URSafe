@@ -32,6 +32,7 @@ class GeneratePasswordFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_generate_password, container, false)
+        val maxLength = 64
 
         upperCheckBox = view.findViewById(R.id.upperCheckBox)
         lowerCheckBox = view.findViewById(R.id.lowerCheckBox)
@@ -44,7 +45,7 @@ class GeneratePasswordFragment : Fragment() {
 
         generateButton.setOnClickListener {
             val length = lengthEditText.text.toString().toIntOrNull()
-            if (length != null && length > 0) {
+            if (length != null && length in 1..maxLength) {
                 val upper = upperCheckBox.isChecked
                 val lower = lowerCheckBox.isChecked
                 val number = numberCheckBox.isChecked
@@ -60,7 +61,7 @@ class GeneratePasswordFragment : Fragment() {
 
                 confirmButton.visibility = View.VISIBLE
             } else {
-                Toast.makeText(requireContext(), "Please enter a length greater than 0.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Please enter a length between 1 and $maxLength.", Toast.LENGTH_SHORT).show()
             }
         }
         confirmButton.setOnClickListener {
