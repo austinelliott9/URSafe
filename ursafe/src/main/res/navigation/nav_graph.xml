@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.ursafe.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_credentialsListFragment"
+            app:destination="@id/credentialsListFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/credentialsListFragment"
+        android:name="com.example.ursafe.CredentialsListFragment"
+        android:label="fragment_credentials_list"
+        tools:layout="@layout/fragment_credentials_list" >
+        <action
+            android:id="@+id/action_credentialsListFragment_to_addCredentialsFragment"
+            app:destination="@id/addCredentialsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/addCredentialsFragment"
+        android:name="com.example.ursafe.AddCredentialsFragment"
+        android:label="fragment_add_credentials"
+        tools:layout="@layout/fragment_add_credentials" >
+        <action
+            android:id="@+id/action_addCredentialsFragment_to_generatePasswordFragment"
+            app:destination="@id/generatePasswordFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/generatePasswordFragment"
+        android:name="com.example.ursafe.GeneratePasswordFragment"
+        android:label="fragment_generate_password"
+        tools:layout="@layout/fragment_generate_password" />
+
+</navigation>

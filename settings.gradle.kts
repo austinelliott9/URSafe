@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "FinalProject448"
-include(":app")
+rootProject.name = "URSafe"
+include(":ursafe")
  
