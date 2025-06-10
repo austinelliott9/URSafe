@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.ursafe.data.Credential
 import com.example.ursafe.viewmodel.CredentialViewModel
 
 class AddCredentialsFragment : Fragment() {
@@ -35,11 +34,13 @@ class AddCredentialsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Initialize views
-        serviceEditText = view.findViewById(R.id.serviceEditText)
-        usernameEditText = view.findViewById(R.id.usernameEditText)
-        passwordEditText = view.findViewById(R.id.passwordEditText)
-        saveButton = view.findViewById(R.id.saveButton)
-        toGeneratorButton = view.findViewById(R.id.toGeneratorButton)
+        with(view) {
+            serviceEditText = findViewById(R.id.serviceEditText)
+            usernameEditText = findViewById(R.id.usernameEditText)
+            passwordEditText = findViewById(R.id.passwordEditText)
+            saveButton = findViewById(R.id.saveButton)
+            toGeneratorButton = findViewById(R.id.toGeneratorButton)
+        }
 
         viewModel = ViewModelProvider(requireActivity())[CredentialViewModel::class.java]
 
@@ -65,13 +66,6 @@ class AddCredentialsFragment : Fragment() {
             Toast.makeText(requireContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show()
             return
         }
-
-        val newCredential = Credential(
-            id = 0, // Auto-generated
-            serviceName = service,
-            username = username,
-            password = password
-        )
 
         viewModel.addCredential(service, username, password)
 

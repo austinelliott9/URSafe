@@ -4,7 +4,7 @@ class PasswordGenerator {
     private val upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     private val lowerChars = "abcdefghijklmnopqrstuvwxyz"
     private val numbers = "0123456789"
-    private val specialChars = " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
+    private val specialChars = " !\"#\$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
 
     fun generatePassword(
         length: Int,
@@ -21,5 +21,6 @@ class PasswordGenerator {
 
         return (1..length)
             .map { characterPool.random() }
-            .joinToString("") }
+            .joinToString("")
     }
+}

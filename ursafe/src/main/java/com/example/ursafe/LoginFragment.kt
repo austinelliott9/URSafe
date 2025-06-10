@@ -16,7 +16,6 @@ import androidx.core.content.edit
 import com.example.ursafe.data.URSafeDatabase
 import com.example.ursafe.util.SecurityUtils.hashToBytes
 import com.google.android.material.textfield.TextInputLayout
-import java.security.MessageDigest
 import com.example.ursafe.util.DatabaseUtils
 
 class LoginFragment : Fragment() {
