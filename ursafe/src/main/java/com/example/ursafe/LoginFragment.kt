@@ -17,6 +17,7 @@ import com.example.ursafe.data.URSafeDatabase
 import com.example.ursafe.util.SecurityUtils.hashToBytes
 import com.google.android.material.textfield.TextInputLayout
 import java.security.MessageDigest
+import com.example.ursafe.util.DatabaseUtils
 
 class LoginFragment : Fragment() {
     @SuppressLint("SetTextI18n", "ClickableViewAccessibility")
@@ -62,14 +63,16 @@ class LoginFragment : Fragment() {
                 // Save the password if it doesn't exist
                 sharedPrefs.edit { putString("user_password", enteredPassword) }
                 val passphrase = hashToBytes(enteredPassword)
-                val db = URSafeDatabase.getInstance(requireContext(), passphrase)
+                DatabaseUtils.setPassphrase(passphrase)
+                URSafeDatabase.getInstance(requireContext(), passphrase)
                 Toast.makeText(requireContext(), "Password saved!", Toast.LENGTH_SHORT).show()
                 findNavController().navigate(R.id.action_loginFragment_to_credentialsListFragment)
             } else {
                 // Check entered password against saved password
                 if (enteredPassword == savedPassword) {
                     val passphrase = hashToBytes(enteredPassword)
-                    val db = URSafeDatabase.getInstance(requireContext(), passphrase)
+                    DatabaseUtils.setPassphrase(passphrase)
+                    URSafeDatabase.getInstance(requireContext(), passphrase)
                     Toast.makeText(requireContext(), "Success!", Toast.LENGTH_SHORT).show()
                     findNavController().navigate(R.id.action_loginFragment_to_credentialsListFragment)
                 } else {

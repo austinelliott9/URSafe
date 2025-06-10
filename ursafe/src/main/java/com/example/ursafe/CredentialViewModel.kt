@@ -10,12 +10,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
+import com.example.ursafe.util.DatabaseUtils
 
 class CredentialViewModel(application: Application) : AndroidViewModel(application) {
 
     lateinit var passphrase: ByteArray
     val dao by lazy {
-        URSafeDatabase.getInstance(application, passphrase).credentialDao()
+        URSafeDatabase.getInstance(application, DatabaseUtils.getPassphrase()).credentialDao()
     }
 
     val credentials: LiveData<List<Credential>> by lazy {
