@@ -5,10 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ursafe.data.Credential
 
 class CredentialsAdapter(
-    private val credentials: MutableList<Credentials>,
-    private val onDelete: (Credentials) -> Unit
+    private val credentials: MutableList<Credential>,
+    private val onUpdate: () -> Unit
 ) : RecyclerView.Adapter<CredentialsAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -25,7 +26,7 @@ class CredentialsAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = credentials[position]
-        holder.serviceText.text = item.service
+        holder.serviceText.text = item.serviceName
         holder.usernameText.text = "Username: ${item.username}"
         holder.passwordText.text = "•••••••••• (tap to reveal)"
 
@@ -41,14 +42,19 @@ class CredentialsAdapter(
         val item = credentials[position]
         credentials.removeAt(position)
         notifyItemRemoved(position)
-        onDelete(item)
     }
 
-    fun getItem(position: Int): Credentials {
+    fun getItem(position: Int): Credential {
         return credentials[position]
     }
 
-    fun getAll(): List<Credentials> {
+    fun getAll(): List<Credential> {
         return credentials
+    }
+
+    fun updateList(newList: List<Credential>) {
+        credentials.clear()
+        credentials.addAll(newList)
+        notifyDataSetChanged()
     }
 }

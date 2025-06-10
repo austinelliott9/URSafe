@@ -16,6 +16,7 @@ import androidx.security.crypto.MasterKey
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import androidx.core.content.edit
+import com.example.ursafe.data.Credential
 
 class AddCredentialsFragment : Fragment() {
 
@@ -69,7 +70,11 @@ class AddCredentialsFragment : Fragment() {
         }
 
         // Creates a new Credentials object
-        val newCredential = Credentials(service, username, password)
+        val newCredential = Credential(
+            id = 0,
+            serviceName = service,
+            username = username,
+            password = password)
 
         // Saves the new credentials to EncryptedSharedPreferences
         val masterKey = MasterKey.Builder(requireContext())
@@ -99,7 +104,7 @@ class AddCredentialsFragment : Fragment() {
     }
 
     // Loads credentials from EncryptedSharedPreferences
-    private fun loadCredentials(context: Context): MutableList<Credentials> {
+    private fun loadCredentials(context: Context): MutableList<Credential> {
         val masterKey = MasterKey.Builder(context)
             .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
             .build()
@@ -113,7 +118,7 @@ class AddCredentialsFragment : Fragment() {
         )
 
         val json = sharedPrefs.getString("stored_credentials", null) ?: return mutableListOf()
-        val type = object : TypeToken<MutableList<Credentials>>() {}.type
+        val type = object : TypeToken<MutableList<Credential>>() {}.type
         return gson.fromJson(json, type)
     }
 }
