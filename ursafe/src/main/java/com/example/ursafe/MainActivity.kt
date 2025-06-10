@@ -1,6 +1,5 @@
 package com.example.ursafe
 import android.os.Bundle
-import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
@@ -12,5 +11,3 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
     }
 }
-
-
