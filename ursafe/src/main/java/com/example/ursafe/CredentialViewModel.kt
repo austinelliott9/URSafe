@@ -8,6 +8,8 @@ import com.example.ursafe.data.URSafeDatabase
 import com.example.ursafe.util.SecurityUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
 
 class CredentialViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -16,10 +18,26 @@ class CredentialViewModel(application: Application) : AndroidViewModel(applicati
         URSafeDatabase.getInstance(application, passphrase).credentialDao()
     }
 
+    val credentials: LiveData<List<Credential>> by lazy {
+        dao.getAllCredentials().asLiveData()
+    }
+
     fun addCredential(service: String, username: String, password: String) {
         val credential = Credential(serviceName = service, username = username, password = password)
         viewModelScope.launch(Dispatchers.IO) {
             dao.insertCredential(credential)
+        }
+    }
+
+    fun deleteCredential(credential: Credential) {
+        viewModelScope.launch(Dispatchers.IO) {
+            dao.deleteCredential(credential)
+        }
+    }
+
+    fun clearAll() {
+        viewModelScope.launch(Dispatchers.IO) {
+            dao.clearAll()
         }
     }
 }
