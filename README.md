@@ -6,8 +6,8 @@
   <a href="https://choosealicense.com/licenses/mit/">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT">
   </a>
-  <img src="https://img.shields.io/github/languages/top/austinelliott9/URsafe" alt="Top language: Kotlin">
-  <img src="https://img.shields.io/github/repo-size/austinelliott9/URsafe" alt="Repo size">
+  <img src="https://img.shields.io/github/languages/top/austinelliott9/URSafe" alt="Top language: Kotlin">
+  <img src="https://img.shields.io/github/repo-size/austinelliott9/URSafe" alt="Repo size">
 </p>
 
 URSafe is a secure, minimalistic password manager for Android. It allows you to store encrypted credentials, protect access with a master password, and generate strong passwords — all locally on your device.
