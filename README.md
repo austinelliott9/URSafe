@@ -20,9 +20,9 @@ URSafe is a secure, minimalistic password manager for Android. It allows you to 
 - 🔑 Secure credential storage using AES encryption
 - 🔍 In-app search by service name
 - 👁️ Toggle password visibility and copy with one tap
-- 🔨 Password generator with customizable rules
-- 🖌️ Clean, modern UI with branded logo and icons
-- 🗂️ Swipe-to-delete with confirmation
+- 🛠️ Password generator with customizable rules
+- 🎨 Clean, modern UI with branded logo and icons
+- ❌ Swipe-to-delete with confirmation
 
 ---
 
@@ -64,19 +64,19 @@ URSafe is a secure, minimalistic password manager for Android. It allows you to 
 ## 📸 Screenshots
 
 <table align="center">
-  <tr>
+  <tr align="center">
     <td><b>Login Screen</b></td>
     <td><b>Credential List</b></td>
   </tr>
-  <tr>
+  <tr align="center">
     <td><img src="screenshots/login.png" width="300"/></td>
     <td><img src="screenshots/credential_list.png" width="300"/></td>
   </tr>
-  <tr>
+  <tr align="center">
     <td><b>Add Credential</b></td>
     <td><b>Password Generator</b></td>
   </tr>
-  <tr>
+  <tr align="center">
     <td><img src="screenshots/add_credential.png" width="300"/></td>
     <td><img src="screenshots/password_generator.png" width="300"/></td>
   </tr>
