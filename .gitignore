@@ -1,0 +1,58 @@
+# ========================
+# Gradle build files
+# ========================
+.gradle/
+build/
+**/build/
+
+# Local configuration
+local.properties
+*.iml
+
+# IDE settings
+.idea/
+*.iws
+*.ipr
+*.iml
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Keystore / signing keys
+*.jks
+*.keystore
+
+# Log files
+*.log
+
+# APK and AAB outputs
+*.apk
+*.ap_
+*.aab
+
+# Testing, coverage, benchmark
+/test-results/
+*.ec
+coverage/
+output.json
+benchmarkData.json
+
+# Android Studio cache
+.cxx/
+.externalNativeBuild/
+
+# Misc
+*.tmp
+*.bak
+*.swp
+
+# Kotlin/Java compilation
+*.class
+*.jar
+
+# Jetpack Compose previews (optional)
+*.pb
+
+# Crash reports (Firebase or otherwise)
+crashlytics-build.log
